@@ -73,7 +73,7 @@ class App extends Component {
         <button
           style={buttonStyle}
           onClick={this.toggleVisibilityHandler}
-        >Switch Visibility
+        >Switch visibility
         </button>
         {persons}
       </div >
