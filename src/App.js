@@ -10,7 +10,7 @@ class App extends Component {
       { id: 'dfhsbvbx', name: 'Josso', weight: 99, child: 'default text' },
       { id: 'asfdasef', name: 'Karlo', weight: 80, child: 'default text' }
     ],
-    listVisibility: true
+    listVisibility: false
   }
 
   typingHandler = (event, index) => {
@@ -39,8 +39,9 @@ class App extends Component {
 
   render() {
     const buttonStyle = {
-      backgroundColor: 'lightgreen',
-      border: '2px solid green',
+      fontSize: '16px',
+      backgroundColor: '#ff4d4d',
+      border: '2px solid gray',
       width: '350px',
       height: '50px'
     };
@@ -62,6 +63,8 @@ class App extends Component {
           })}
         </div>
       );
+    
+    buttonStyle.backgroundColor = 'lightgreen';
     }
 
     return (
