@@ -6,30 +6,35 @@ class App extends Component {
   state = {
     header_text: 'Hello Croatia',
     people: [
-      { name: 'Mario', weight: 75 },
-      { name: 'Joso', weight: 700 },
-      { name: 'Karlo', weight: 80 }
-    ]
+      { id: 'asdgasdg', name: 'Mario', weight: 75, child: 'default text' },
+      { id: 'dfhsbvbx', name: 'Josso', weight: 99, child: 'default text' },
+      { id: 'asfdasef', name: 'Karlo', weight: 80, child: 'default text' }
+    ],
+    listVisibility: true
   }
 
-  switchNameHandler = newName => {
-    this.setState({
-      people: [
-        { name: newName, weight: 74 },
-        { name: 'Joso', weight: 700 },
-        { name: 'Karlo Markovic', weight: 81 }
-      ]
-    });
+  typingHandler = (event, index) => {
+    const person = {
+      ...this.state.people[index]
+    }
+
+    person.child = event.target.value;
+
+    const people = [...this.state.people];
+    people[index] = person;
+
+    this.setState({ people: people });
   }
 
-  typingHandler = event => {
-    this.setState({
-      people: [
-        { name: event.target.value, weight: 74 },
-        { name: 'Joso', weight: 700 },
-        { name: 'Karlo Markovic', weight: 81 }
-      ]
-    });
+  deletePersonHandler = personIndex => {
+    const people = [...this.state.people];
+    people.splice(personIndex, 1);
+    this.setState({ people: people });
+  }
+
+  toggleVisibilityHandler = () => {
+    let visibility = this.state.listVisibility;
+    this.setState({ listVisibility: !visibility });
   }
 
   render() {
@@ -40,26 +45,34 @@ class App extends Component {
       height: '50px'
     };
 
+    let persons = null;
+    if (this.state.listVisibility) {
+      persons = (
+        <div>
+          {this.state.people.map((person, index) => {
+            return <Person
+              click={() => this.deletePersonHandler(index)}
+              name={person.name}
+              weight={person.weight}
+              child={person.child}
+              key={person.id}
+              typing={(event) => this.typingHandler(event, index)} >
+              {person.child}
+            </Person>
+          })}
+        </div>
+      );
+    }
+
     return (
       <div className="App">
         <h1>{this.state.header_text}</h1>
         <button
           style={buttonStyle}
-          onClick={this.switchNameHandler.bind(this, 'Mario Markovic')}
-        >Switch something</button>
-        <Person
-          name={this.state.people[0].name}
-          weight={this.state.people[0].weight}
-          typing={this.typingHandler} />
-        <Person
-          name={this.state.people[1].name}
-          weight={this.state.people[1].weight}
-          click={() => this.switchNameHandler('Mario MARKOVIC')}
-        >Also, I am fiction character.
-        </Person>
-        <Person
-          name={this.state.people[2].name}
-          weight={this.state.people[2].weight} />
+          onClick={this.toggleVisibilityHandler}
+        >Switch Visibility
+        </button>
+        {persons}
       </div >
     );
   }
