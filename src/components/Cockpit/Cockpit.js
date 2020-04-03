@@ -1,6 +1,14 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 const cockpit = props => {
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect 1');
+  });
+
+  useEffect(() => {
+    console.log('[Cockpit.js] useEffect 2');
+  }, []);
+
   const buttonStyle = {
     fontSize: '16px',
     backgroundColor: '#ff4d4d',
@@ -19,7 +27,7 @@ const cockpit = props => {
       <button
         style={buttonStyle}
         onClick={props.toggleVisibility}
-        >Switch Visibility
+      >Switch Visibility
       </button>
     </div>
   );
